@@ -6,11 +6,11 @@ ENVIRONMENT=$1
 
 if [ -z "$ENVIRONMENT" ]; then
   echo "Error: Deployment environment not specified."
-  echo "Usage: ./deploy.sh [staging|production]
+  echo "Usage: ./deploy.sh [staging|production]"
   exit 1
 fi
 
-echo "Starting development to $ENVIRONMENT environment..."
+echo "Starting deployment to $ENVIRONMENT environment..."
 
 if [ "$ENVIRONMENT" == "staging" ]; then
   SERVER_IP="192.168.1.10"
