@@ -1,0 +1,54 @@
+name: Artifacts Demo
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a dummy build artifact
+        run: |
+          mkdir -p dist
+          echo "Hello from the build job!" > dist/my-app.txt
+          echo "This is version 1.0" >> dist/my-app.txt
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-application-package
+          path: dist/
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-application-package
+
+      - name: Run tests on the artifact
+        run: |
+          echo "Listing the downloaded files:
+          ls -la
+
+          echo "Verifying file content:"
+          cat my-app.txt
+
+          grep "Hello" my-app.txt
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact again
+        uses: actions/lownload-artifact@v4
+        with:
+          name: my-application-package
+
+      - name: Deploy the artifact
+        run: |
+          echo "Deploying the application..."
+          ls -la
+          echo "Content to deploy:"
+          cat my-app.txt
