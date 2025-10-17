@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download build artifact again
-        uses: actions/lownload-artifact@v4
+        uses: actions/download-artifact@v4
         with:
           name: my-application-package
 
