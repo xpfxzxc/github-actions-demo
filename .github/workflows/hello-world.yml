@@ -1,27 +1,39 @@
-# name: Hello World Workflow
+name: Deploy Application
 
-# on: [push]
-
-# jobs:
-#   hello-job:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Say Hello
-#         run: echo "Hello, World! Welcome to Github Actions!"
-
-name: Fun with Third-Party Tools
-
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  cowsay-job:
+  deploy-to-staging:
     runs-on: ubuntu-latest
     steps:
-      - name: Install and run cowsay
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 假设这里有 build 步骤...
+      - name: Build application
         run: |
-          sudo apt-get update
+          echo "Building the application..."
+          mkdir build && echo "My App" > build/index.html
+          
+      - name: Deploy to Staging
+        # 直接调用脚本，并传入 "staging" 作为参数
+        run: ./scripts/deploy.sh staging
 
-          sudo apt-get install -y cowsay
-
-          cowsay "Moo! I was installed on the fly in the Github Actions!"
+  # 假设有一个需要手动触发的生产部署
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    # 只有当创建了 'v' 开头的 tag 时才运行
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Build application
+        run: echo "Building..." # 假设的 build
+      
+      - name: Deploy to Production
+        # 调用同一个脚本，但传入 "production" 参数
+        run: ./scripts/deploy.sh production
