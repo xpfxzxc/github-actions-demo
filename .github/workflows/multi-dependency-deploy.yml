@@ -1,0 +1,29 @@
+name: Multi-dependency Deploy
+
+on: [push]
+
+jobs:
+  # --- 并行执行的测试作业 ---
+  test-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running tests on Ubuntu..." && exit 0 # exit 0 表示成功
+
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - run: echo "Running tests on Windows..." && exit 0
+
+  lint-code:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Linting the code..." && exit 0
+      
+  # --- 部署作业，依赖于上面所有作业 ---
+  deploy:
+    # 关键在这里：一个包含多个作业 ID 的列表
+    needs: [test-ubuntu, test-windows, lint-code]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production
+        run: echo "🚀 All checks passed. Deploying to production!"
