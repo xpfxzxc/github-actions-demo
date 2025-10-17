@@ -1,11 +1,27 @@
-name: Hello World Workflow
+# name: Hello World Workflow
+
+# on: [push]
+
+# jobs:
+#   hello-job:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Say Hello
+#         run: echo "Hello, World! Welcome to Github Actions!"
+
+name: Fun with Third-Party Tools
 
 on: [push]
 
 jobs:
-  hello-job:
+  cowsay-job:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Say Hello
-        run: echo "Hello, World! Welcome to Github Actions!"
+      - name: Install and run cowsay
+        run: |
+          sudo apt-get update
+
+          sudo apt-get install -y cowsay
+
+          cowsay "Moo! I was installed on the fly in the Github Actions!"
