@@ -12,7 +12,9 @@ jobs:
   test-windows:
     runs-on: windows-latest
     steps:
-      - run: echo "Running tests on Windows..." && exit 0
+      - run: |
+          Write-Host "Running tests on Windows..."
+          exit 0
 
   lint-code:
     runs-on: ubuntu-latest
