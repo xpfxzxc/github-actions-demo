@@ -1,0 +1,25 @@
+name: Workflow Level Env
+
+on: [push]
+
+env:
+  NODE_VERSION: '20'
+  PROJECT_DIR: './src'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use env in 'uses'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Use env in 'run'
+        run: echo "Project directory is $PROJECT_DIR"
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test job can also access the variable
+        run: echo "The Node.js version is $NODE_VERSION"
