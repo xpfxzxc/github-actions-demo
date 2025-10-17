@@ -1,0 +1,30 @@
+name: Sequential Jobs Example
+
+on: [push]
+
+jobs:
+  # --- 第一个作业 ---
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build application
+        run: |
+          echo "Building the application..."
+          # 创建一个模拟的构建产物
+          mkdir -p artifacts
+          echo "build-content" > artifacts/app.zip
+
+  # --- 第二个作业 ---
+  test:
+    # 关键在这里！
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: |
+          echo "Running tests on the built application..."
+          # 假设这里需要用到 build 作业的产物
+          # (我们将在下一节学习如何通过 artifacts 传递文件)
+          echo "Tests passed!"
