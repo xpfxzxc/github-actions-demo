@@ -15,7 +15,7 @@ echo "Starting deployment to $ENVIRONMENT environment..."
 if [ "$ENVIRONMENT" == "staging" ]; then
   SERVER_IP="192.168.1.10"
   echo "-> Target server: Staging ($SERVER_IP)"
-ellf [ "$ENVIRONMENT" == "production" ]; then
+elif [ "$ENVIRONMENT" == "production" ]; then
   SERVER_IP="10.0.0.5"
   echo "-> Target server: Production ($SERVER_IP)"
 else
