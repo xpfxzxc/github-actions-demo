@@ -1,0 +1,53 @@
+name: 'Lab 1: Workflow Syntax Part 1'
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate report file
+        env:
+          REPORT_API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          echo "Simulating report generation using API Key..."
+          echo "API Key used: $REPORT_API_KEY" > report.txt
+          echo "Report generated on: $(date)" >> report.txt
+          echo "---------------------------------" >> report.txt
+          echo "This is the main content of the report." >> report.txt
+
+          echo "Generated report.txt content:"
+          cat report.txt
+
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-final-report
+          path: report.txt
+
+  validate-report:
+    needs: generate-report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download the report
+        uses: actions/download-artifact@v4
+        with:
+          name: my-final-report
+
+      - name: Validate report content
+        run: |
+          echo "Validating the downloaded report..."
+          ls -la
+
+          grep "API Key" report.txt
+
+          echo "Validate successful! The report contains the keyword."
