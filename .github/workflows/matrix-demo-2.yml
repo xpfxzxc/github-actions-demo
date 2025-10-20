@@ -52,6 +52,7 @@ jobs:
       - name: Setup environment and run tests
         env:
           EXTRA_ENV_VAR: ${{ matrix.extra_env }}
+        shell: bash
         run: |
           echo "OS: ${{ matrix.os }}"
           echo "Node version: ${{ matrix.node-version }}"
