@@ -1,0 +1,16 @@
+name: Using matrix strategy
+
+on: push
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [18, 20]
+
+    steps:
+      - name: echo Node.js ${{ matrix.node-version }} and OS ${{ matrix.os }}
+        run: echo ${{ matrix.node-version }} and OS ${{ matrix.os }}
