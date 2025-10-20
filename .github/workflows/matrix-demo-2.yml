@@ -30,3 +30,33 @@ jobs:
 
     steps:
       - run: echo "Testing on ${{ matrix.os }} with Node ${{ matrix.node-version }}"
+
+  test-matrix:
+    runs-on: ${{ matrix.os }}
+    outputs:
+      experimental-status: ${{ matrix.experimental }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [18, 20]
+
+        include:
+          - node-version: 20
+            experimental: true
+
+          - os: windows-latest
+            extra-env: 'NODE_OPTIONS=--openssl-legacy-provider'
+
+    steps:
+      - name: Setup environment and run tests
+        env:
+          EXTRA_ENV_VAR: ${{ matrix.extra_env }}
+        run: |
+          echo "OS: ${{ matrix.os }}"
+          echo "Node version: ${{ matrix.node-version }}"
+          echo "Extra Env: $EXTRA_ENV_VAR"
+
+          if [[ "${{ matrix.experimental }}" == "true"" ]]; then
+            echo "This is an experimental build!"
+          fi
