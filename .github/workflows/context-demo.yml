@@ -21,10 +21,15 @@ jobs:
   job-context:
     runs-on: ubuntu-latest
     steps:
-      - name: Run some command
-        id: my_step
-        run: exit 1
-
+      - name: Run main task
+        id: main_task
+        run: exit 1 # 假设这个任务失败了
+      
       - name: Notify on failure
-        if: ${{ job.status == 'failure' }}
-        run: echo "Job failed! Notifying the team..."
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "failure" ]; then
+            echo "Job failed! Sending a notification."
+          else
+            echo "Job status is ${{ job.status }}"
+          fi
