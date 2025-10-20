@@ -12,5 +12,5 @@ jobs:
         node-version: [18, 20]
 
     steps:
-      - name: echo Node.js ${{ matrix.node-version }} and OS ${{ matrix.os }}
-        run: echo ${{ matrix.node-version }} and OS ${{ matrix.os }}
+      - name: echo "Node.js version ${{ matrix.node-version }} / OS ${{ matrix.os }}"
+        run: echo "Node.js version ${{ matrix.node-version }} / OS ${{ matrix.os }}"
