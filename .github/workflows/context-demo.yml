@@ -33,3 +33,16 @@ jobs:
           else
             echo "Job status is ${{ job.status }}"
           fi
+
+  pass-data-between-steps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate a value
+        id: generator
+        run: |
+          echo "random_number=$(($RANDOM % 100))" >> "$GITHUB_OUTPUT"
+
+      - name: Use the value from the previous step
+        if: steps.generator.outcome == 'success'
+        run: |
+          echo "The random number generated was ${{ steps.generator.outputs.random_number }}"
