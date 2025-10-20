@@ -1,9 +1,9 @@
-name: Using matrix strategy with "exclude“
+name: Using matrix strategy with "exclude" and "include"
 
 on: push
 
 jobs:
-  build-and-test:
+  test-matrix-exclude:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -16,3 +16,17 @@ jobs:
 
     steps:
       - run: echo "Testing with Node ${{ matrix.node-version }} and Python ${{ matrix.python-version }}"
+
+  test-matrix-include:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [18, 20]
+
+        include:
+          - os: macos-latest
+            node-version: 21
+
+    steps:
+      - run: echo "Testing on ${{ matrix.os }} with Node ${{ matrix.node-version }}
