@@ -1,0 +1,19 @@
+name: Github Context Demo
+
+on: [push, pull_request]
+
+jobs:
+  show-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Github Context
+        run: |
+          echo "Workflow triggered by: ${{ github.actor }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Event: ${{ github.event_name }}"
+          echo "Branch/Tag: ${{ github.ref_name }}"
+          echo "Commit SHA: ${{ github.sha }}"
+
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "PR Number: ${{ github.event.pull_request.number }}"
+          fi
