@@ -5,7 +5,7 @@ on: push
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    strategry:
+    strategy:
       matrix:
         node-version: [18, 20]
         python-version: [3.9, 3.10]
