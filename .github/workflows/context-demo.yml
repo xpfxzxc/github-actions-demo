@@ -17,3 +17,14 @@ jobs:
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             echo "PR Number: ${{ github.event.pull_request.number }}"
           fi
+
+  job-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run some command
+        id: my_step
+        run: exit 1
+
+      - name: Notify on failure
+        if: ${{ job.status == 'failure' }}
+        run: echo "Job failed! Notifying the tema...“
