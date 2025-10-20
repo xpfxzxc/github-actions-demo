@@ -1,0 +1,18 @@
+name: Using matrix strategy with "exclude“
+
+on: push
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategry:
+      matrix:
+        node-version: [18, 20]
+        python-version: [3.9, 3.10]
+
+        exclude:
+          - node-version: 18
+            python-version: 3.10
+
+    steps:
+      - run: echo "Testing with Node ${{ matrix.node-version }} and Python ${{ matrix.python-version }}"
