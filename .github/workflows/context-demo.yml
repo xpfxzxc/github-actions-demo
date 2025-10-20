@@ -26,5 +26,5 @@ jobs:
         run: exit 1
 
       - name: Notify on failure
-        if: ${{ failure() }}
-        run: echo "Job failed! Notifying the team...“
+        if: ${{ job.status == 'failure' }}
+        run: echo "Job failed! Notifying the team..."
