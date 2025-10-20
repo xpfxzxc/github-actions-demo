@@ -57,6 +57,6 @@ jobs:
           echo "Node version: ${{ matrix.node-version }}"
           echo "Extra Env: $EXTRA_ENV_VAR"
 
-          if [[ "${{ matrix.experimental }}" == "true"" ]]; then
+          if [[ "${{ matrix.experimental }}" == "true" ]]; then
             echo "This is an experimental build!"
           fi
