@@ -29,4 +29,4 @@ jobs:
             node-version: 21
 
     steps:
-      - run: echo "Testing on ${{ matrix.os }} with Node ${{ matrix.node-version }}
+      - run: echo "Testing on ${{ matrix.os }} with Node ${{ matrix.node-version }}"
