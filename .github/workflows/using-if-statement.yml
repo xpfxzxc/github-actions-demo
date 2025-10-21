@@ -39,7 +39,7 @@ jobs:
         run: echo "✅ Main task succeeded!"
 
       - name: Notify on failure
-        if: failure() # 或者 if: steps.main_task.outcome == 'failure'
+        if: steps.main_task.outcome == 'failure'
         run: echo "❌ Main task failed! Sending a Slack alert."
 
       - name: Cleanup step
