@@ -23,3 +23,25 @@ jobs:
     steps:
       - name: Deploy to production
         run: echo "🚀 Deploying to production from the main branch!"
+
+  my-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Main task that might fail
+        id: main_task
+        continue-on-error: true 
+        run: |
+          echo "Doing something critical..."
+          exit 1
+
+      - name: Notify on success
+        if: steps.main_task.outcome == 'success'
+        run: echo "✅ Main task succeeded!"
+
+      - name: Notify on failure
+        if: failure() # 或者 if: steps.main_task.outcome == 'failure'
+        run: echo "❌ Main task failed! Sending a Slack alert."
+
+      - name: Cleanup step
+        if: always()
+        run: echo "🧹 Running cleanup tasks."
