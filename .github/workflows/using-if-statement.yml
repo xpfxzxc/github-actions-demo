@@ -1,0 +1,25 @@
+name: CI/CD with Conditional Deployment
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Building the application..."
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running tests..."
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    if: github.ref_name == 'main'
+
+    steps:
+      - name: Deploy to production
+        run: echo "🚀 Deploying to production from the main branch!"
